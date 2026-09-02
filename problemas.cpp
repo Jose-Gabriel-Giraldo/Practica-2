@@ -5,6 +5,16 @@
 
 using namespace std;
 
+void convertirMayusculas(char *cadena){
+    char *p = cadena;
+    while (*p != '\0') {
+        if (*p >= 'a' && *p <= 'z') {
+            *p = *p - 32;
+        }
+        p++;
+    }
+}
+
 void problema2(){
     const int arreglo = 200;
     const int num_letras = 26;
@@ -46,21 +56,13 @@ int problema4(const char *cadena){
 }
 
 void problema6(){
-    const int tamano =100;
+    const int tamano = 100;
     char cadena[tamano];
-
     cout << "Ingrese una palabra: \n";
     cin >> cadena;
-
     cout << "Original: " << cadena << ". \n";
 
-    char *p = cadena;
-    while (*p != '\0') {
-        if (*p >= 'a' && *p <= 'z'){
-            *p = *p - 32;
-        }
-        p++;
-    }
+    convertirMayusculas(cadena);
 
     cout << "En mayuscula: " << cadena << ". \n";
 }
@@ -94,4 +96,105 @@ void problema8(){
 
     cout << "Original: " << cadena << ". \n";
     cout << "Texto: " << texto << ". Numero: " << numeros << ". \n";
+}
+
+void problema10(){
+    const int tamano = 20;
+    char romano[tamano];
+
+    cout << "Ingrese un numero romano: \n";
+    cin >> romano;
+
+    convertirMayusculas(romano);
+
+    short int valores[128] = {0};
+    valores['I'] = 1;
+    valores['V'] = 5;
+    valores['X'] = 10;
+    valores['L'] = 50;
+    valores['C'] = 100;
+    valores['D'] = 500;
+    valores['M'] = 1000;
+
+    short int total = 0;
+    char *p = romano;
+
+    while (*p != '\0'){
+        short int actual = valores[*p];
+        short int siguiente = valores[*(p + 1)];
+
+        if (actual < siguiente){
+            total -= actual;
+        } else {
+            total += actual;
+        }
+
+        p++;
+    }
+
+    cout << "El numero ingresado fue: " << romano << "\n";
+    cout << "Que corresponde a: " << total << ".\n";
+}
+
+
+void problema12(){
+    const int max = 10;
+    short int matriz[max][max];
+    int n;
+
+    cout << "Ingrese el tamano de la matriz cuadrada (max " << max << "): \n";
+    cin >> n;
+    if (n <= 0 || n > max) {
+        cout << "Tamano invalido.\n";
+        return;
+    }
+
+    cout << "Ingrese los " << n * n << " elementos:\n";
+    for (int i = 0; i < n; i++) {
+        short int *p = matriz[i];
+        for (int j = 0; j < n; j++, p++) {
+            cin >> *p;
+        }
+    }
+
+    cout << "\nMatriz ingresada:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << matriz[i][j] << "\t";
+        }
+        cout << '\n';
+    }
+
+    int constante = 0;
+    for (int j = 0; j < n; j++) {
+        constante += matriz[0][j];
+    }
+
+    bool esMagico = true;
+
+    for (int i = 0; i < n; i++) {
+        int sumaFila = 0;
+        int sumaCol = 0;
+        for (int j = 0; j < n; j++) {
+            sumaFila += matriz[i][j];
+            sumaCol  += matriz[j][i];
+        }
+        if (sumaFila != constante || sumaCol != constante) {
+            esMagico = false;
+        }
+    }
+
+    int diag1 = 0, diag2 = 0;
+    for (int i = 0; i < n; i++) {
+        diag1 += matriz[i][i];
+        diag2 += matriz[i][n - 1 - i];
+    }
+    if (diag1 != constante || diag2 != constante) {
+        esMagico = false;
+    }
+
+    if (esMagico)
+        cout << "\nLa matriz SI es un cuadrado magico. Constante magica: " << constante << ".\n";
+    else
+        cout << "\nLa matriz NO es un cuadrado magico.\n";
 }
