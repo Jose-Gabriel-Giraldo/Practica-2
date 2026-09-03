@@ -136,7 +136,6 @@ void problema10(){
     cout << "Que corresponde a: " << total << ".\n";
 }
 
-
 void problema12(){
     const int max = 10;
     short int matriz[max][max];
@@ -198,3 +197,67 @@ void problema12(){
     else
         cout << "\nLa matriz NO es un cuadrado magico.\n";
 }
+
+void problema14(){
+    const int N = 5;
+
+    int original[N][N];
+    int rot90[N][N];
+    int rot180[N][N];
+    int rot270[N][N];
+
+    int *pOriginal = &original[0][0];
+    int *pRot90    = &rot90[0][0];
+    int *pRot180   = &rot180[0][0];
+    int *pRot270   = &rot270[0][0];
+
+    int valor = 1;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            *(pOriginal + (i * N) + j)                   = valor;
+            *(pRot90    + (j * N) + (N - 1 - i))          = valor;
+            *(pRot180   + ((N - 1 - i) * N) + (N - 1 - j)) = valor;
+            *(pRot270   + ((N - 1 - j) * N) + i)          = valor;
+            valor++;
+        }
+    }
+
+    int *matrices[4] = { pOriginal, pRot90, pRot180, pRot270 };
+    const char *titulos[4] = {
+        "Matriz Original:",
+        "Matriz Rotada 90 grados:",
+        "Matriz Rotada 180 grados:",
+        "Matriz Rotada 270 grados:"
+    };
+
+    for (int m = 0; m < 4; m++) {
+        cout << "\n" << titulos[m] << "\n";
+        int *pm = matrices[m];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                cout.width(4);
+                cout << *pm++;
+            }
+            cout << "\n";
+        }
+    }
+}
+
+void problema16() {
+    int n;
+    cout << "Ingrese el tamano de la malla (n x n): \n";
+    cin >> n;
+
+
+    //Formula usada: C(2n, n) = (n+1)/1 * (n+2)/2 * (n+3)/3 * ... * (2n)/n coeficiente binomial
+    long long resultado = 1;
+    int numerador = n + 1;
+
+    for (int i = 1; i <= n; i++) {
+        resultado = (resultado * numerador) / i;
+        numerador++;
+    }
+
+    cout << "Para una malla de " << n << "x" << n << " puntos hay " << resultado << " caminos.\n";
+}
+

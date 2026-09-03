@@ -18,6 +18,8 @@ int main()
         cout << "8. Separador Numeros y caracteres p8\n";
         cout << "10. Conversor de Romanos a Arabigo p10\n";
         cout << "12. Cuadrado magico p12\n";
+        cout << "14. Matriz rotada p14\n";
+        cout << "16. Caminos posibles de maya n*n p16\n";
         cout << "0. Salir del programa\n";
         cin >> problema;
 
@@ -45,6 +47,10 @@ int main()
         case 10: problema10(); break;
 
         case 12: problema12(); break;
+
+        case 14: problema14(); break;
+
+        case 16: problema16(); break;
 
         case 0:
             salir = true;
